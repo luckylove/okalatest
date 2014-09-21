@@ -1,0 +1,16 @@
+<div id="footer">
+        <div class="subFooter">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="pull-left">
+                            © 2014 <a href="http://noscomedia.com/" target="_blank">Nosco Media Inc.</a> /
+                            <a href="/licenses">Licenses</a> /
+                            <a href="/terms">Terms &amp; Conditions</a> /
+                            <a href="/privacy">Privacy Policy</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>

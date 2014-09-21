@@ -1,0 +1,108 @@
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+html,
+body {
+    height: 100%;
+    /* The html and body elements cannot have any padding or margin. */
+}
+
+/* Wrapper for page content to push down footer */
+#wrap {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    /* Negative indent footer by its height */
+    margin: 0 auto -41px;
+    /* Pad bottom by footer height */
+    padding: 0 0 60px;
+}
+
+/* Set the fixed height of the footer here */
+
+#footer {
+    height: 41px;
+    background-color: #333333;
+    color: #d4d4d4;
+    font-size: 14px;
+}
+#footer .footerWrap {
+    padding-top: 20px;
+    padding-bottom: 15px;
+}
+#footer h4 {
+    border-bottom: 1px dotted #777;
+    font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    margin: 0 0 10px;
+    padding-bottom: 10px;
+}
+#footer ul {
+    margin: 0;
+}
+#footer ul li {
+    margin-bottom: 5px;
+}
+#footer a {
+    color: #d4d4d4;
+}
+#footer a:hover,
+#footer a:focus {
+    color: #aaa;
+}
+#footer .subFooter {
+    color: #d4d4d4;
+    font-size: 12px;
+    padding: 12px 0;
+    background-color: #222;
+}
+#footer .subFooter a {
+    color: #d4d4d4;
+}
+#footer .subFooter a:hover,
+#footer .subFooter a:focus {
+    color: #aaa;
+}
+#footer .subFooter ul{
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+}
+#footer .subFooter ul > li {
+    float: left;
+}
+#footer .subFooter ul > li {
+    display: block;
+    position: relative;
+    margin: 0;
+}
+#footer .subFooter ul > li a {
+    margin-left: 15px;
+}
+
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
+#wrap > .container {
+    padding: 90px 15px 0;
+}
+.container .credit {
+    margin: 20px 0;
+}
+
+#footer > .container {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.nav-logo{
+    overflow: hidden;
+    text-indent: -99999px;
+    background: url('../images/smlogo.png') 0 0 no-repeat;
+    padding: 0;
+    width: 160px;
+    height: 70px;
+    margin: 0 10px 0 0;
+    background-size: 160px 70px;
+}
