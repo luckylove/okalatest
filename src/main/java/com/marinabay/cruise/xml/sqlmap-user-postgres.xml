@@ -4,22 +4,26 @@
 
 
   <resultMap id="userResultMap" type="com.marinabay.cruise.model.User" >
-    <id column="page_id" property="pageId" jdbcType="BIGINT" />
-    <result column="page_url" property="pageUrl" jdbcType="VARCHAR" />
-    <result column="page_title" property="pageTitle" jdbcType="VARCHAR" />
+    <id column="id" property="pageId" jdbcType="BIGINT" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="role" property="role" jdbcType="VARCHAR" />
+    <result column="taxi_license" property="taxiLicense" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
   </resultMap>
 
   <sql id="Base_Column_List" >
-    page_id, page_url, page_title
+    id, user_name, email, password, role, taxi_license, address
   </sql>
   
-  <select id="select" resultMap="BaseResultMap" parameterType="map" >
+  <select id="select" resultMap="userResultMap" parameterType="map" >
     select
     <if test="distinct" >
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from page
+    from user
     
     <if test="_parameter != null" >
       
@@ -31,16 +35,16 @@
     
   </select>
   
-  <select id="selectByID" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectByID" resultMap="userResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
-    from page
-    where page_id = #{pageId, jdbcType=BIGINT}
+    from user
+    where id = #{value}
   </select>
   
   <delete id="deleteByID" parameterType="java.lang.Long" >
-    delete from page
-    where page_id = #{pageId,jdbcType=BIGINT}
+    delete from user
+    where id = #{value}
   </delete>
 
  <!-- <insert id="insert" parameterType="com.namo.webanalytics.model.Page" >
