@@ -7,7 +7,7 @@
  */
 var cruiseApp = angular.module('cruiseApp', ['ui.bootstrap']);
 function AccordionDemoCtrl($scope) {
-    $scope.oneAtATime = true;                            alert('aa')
+    $scope.oneAtATime = false;
 
     $scope.groups = [
         {

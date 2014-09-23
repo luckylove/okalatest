@@ -6,9 +6,8 @@ import com.marinabay.cruise.constant.ROLE;
  * Date: 9/21/14
  * Time: 9:19 PM
  */
-public class User {
+public class User extends GenericModel{
 
-    private Long id;
     private String userName;
     private String email;
     private String password;
@@ -26,14 +25,6 @@ public class User {
 
     public void setRole(ROLE role) {
         this.role = role;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getUserName() {

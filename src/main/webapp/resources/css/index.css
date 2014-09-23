@@ -2,6 +2,7 @@
 html,
 body {
     height: 100%;
+    background-image: url("../images/bg.jpg");
     /* The html and body elements cannot have any padding or margin. */
 }
 
@@ -85,7 +86,7 @@ body {
 /* Not required for template or sticky footer method. */
 
 #wrap > .container {
-    padding: 90px 15px 0;
+    padding: 90px 0 0;
 }
 .container .credit {
     margin: 20px 0;

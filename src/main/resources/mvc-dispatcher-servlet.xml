@@ -10,6 +10,14 @@
 
     <mvc:annotation-driven/>
 
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/*.html" />
+            <mvc:exclude-mapping path="/login.html"/>
+            <mvc:exclude-mapping path="/loginSubmit.html"/>
+            <bean class="com.marinabay.cruise.intercepter.SecurityInterceptor" />
+        </mvc:interceptor>
+    </mvc:interceptors>
     <!-- Scans the classpath of this application for @Components to deploy as beans -->
     <context:component-scan base-package="com.marinabay.cruise.controller" use-default-filters="false">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>

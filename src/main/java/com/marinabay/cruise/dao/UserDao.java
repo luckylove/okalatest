@@ -5,6 +5,6 @@ import com.marinabay.cruise.model.User;
 
 public interface UserDao extends GenericDao<User> {
 
-	public User findUser(String email);
+	public User findUserByEmail(String email);
 
 }

@@ -4,7 +4,7 @@
 
 
   <resultMap id="userResultMap" type="com.marinabay.cruise.model.User" >
-    <id column="id" property="pageId" jdbcType="BIGINT" />
+    <id column="id" property="id" jdbcType="BIGINT" />
     <result column="user_name" property="userName" jdbcType="VARCHAR" />
     <result column="email" property="email" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
@@ -23,7 +23,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from user
+    from users
     
     <if test="_parameter != null" >
       
@@ -38,12 +38,19 @@
   <select id="selectByID" resultMap="userResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
-    from user
+    from users
     where id = #{value}
   </select>
+
+    <select id="findUserByEmail" resultMap="userResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List" />
+        from users
+        where email = #{value}
+    </select>
   
   <delete id="deleteByID" parameterType="java.lang.Long" >
-    delete from user
+    delete from users
     where id = #{value}
   </delete>
 
@@ -70,11 +77,6 @@
   </update>
   
   
-  <select id="selectPage" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="Base_Column_List" />
-    from page
-    where page_url = #{pageUrl, jdbcType=VARCHAR}
-  </select>-->
+  -->
   
 </mapper>
