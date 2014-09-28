@@ -107,3 +107,19 @@ body {
     margin: 0 10px 0 0;
     background-size: 160px 70px;
 }
+
+.mrt-10 {
+    margin-top: 10px;
+}
+
+.pdr-10 {
+    padding-right: 10px;
+}
+
+.modal-top {
+    top: 170px;
+}
+.form-horizontal input.ng-invalid {
+    border-color: #FA787E;
+}
+

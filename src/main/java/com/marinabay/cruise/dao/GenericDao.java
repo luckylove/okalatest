@@ -1,7 +1,8 @@
 package com.marinabay.cruise.dao;
 
+import com.marinabay.cruise.model.PagingModel;
+
 import java.util.List;
-import java.util.Map;
 
 public interface GenericDao<T> {
 	
@@ -9,8 +10,10 @@ public interface GenericDao<T> {
 	
 	public void insert(T record);
 	
-	public List<T> select(Map<String, Object> map);
-	
+	public List<T> select(PagingModel model);
+
+	public Long count(PagingModel model);
+
 	public T selectByID(long id);
 	
 	public int update(T record);

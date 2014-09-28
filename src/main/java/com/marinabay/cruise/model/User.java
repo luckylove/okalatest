@@ -1,6 +1,8 @@
 package com.marinabay.cruise.model;
 
 import com.marinabay.cruise.constant.ROLE;
+import com.marinabay.cruise.constant.USERTYPE;
+
 /**
  * User: son.nguyen
  * Date: 9/21/14
@@ -15,8 +17,37 @@ public class User extends GenericModel{
     private String mobile;
     private String taxiLicense;
     private String address;
+    private USERTYPE userType;
+    private Long userGroupId;
+
+    //custom field
+    private String userGroupView;
 
     public User() {
+    }
+
+    public String getUserGroupView() {
+        return userGroupView;
+    }
+
+    public void setUserGroupView(String userGroupView) {
+        this.userGroupView = userGroupView;
+    }
+
+    public USERTYPE getUserType() {
+        return userType;
+    }
+
+    public void setUserType(USERTYPE userType) {
+        this.userType = userType;
+    }
+
+    public Long getUserGroupId() {
+        return userGroupId;
+    }
+
+    public void setUserGroupId(Long userGroupId) {
+        this.userGroupId = userGroupId;
     }
 
     public ROLE getRole() {

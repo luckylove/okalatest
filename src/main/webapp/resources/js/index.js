@@ -32,3 +32,4 @@ function AccordionDemoCtrl($scope) {
         isFirstDisabled: false
     };
 }
+

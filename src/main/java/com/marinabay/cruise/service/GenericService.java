@@ -2,9 +2,9 @@ package com.marinabay.cruise.service;
 
 import com.marinabay.cruise.dao.GenericDao;
 import com.marinabay.cruise.model.GenericModel;
+import com.marinabay.cruise.model.PagingModel;
 
 import java.util.List;
-import java.util.Map;
 
 
 public abstract class GenericService<T extends GenericModel>{
@@ -19,8 +19,12 @@ public abstract class GenericService<T extends GenericModel>{
 		getDao().insert(record);
 	}
 
-	public List<T> select(Map<String, Object> map) {
-		return getDao().select(map);
+    public Long count(PagingModel model) {
+        return getDao().count(model);
+    }
+
+	public List<T> select(PagingModel model) {
+		return getDao().select(model);
 	}
 
 	public T selectByID(long id) {

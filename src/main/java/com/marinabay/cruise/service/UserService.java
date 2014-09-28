@@ -1,7 +1,10 @@
 package com.marinabay.cruise.service;
 
 import com.marinabay.cruise.dao.UserDao;
+import com.marinabay.cruise.model.JSonPagingResult;
+import com.marinabay.cruise.model.PagingModel;
 import com.marinabay.cruise.model.User;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +26,22 @@ public class UserService extends GenericService<User>{
 
     public User findUserByEmail(String email) {
         return getDao().findUserByEmail(email);
+    }
+
+    public JSonPagingResult<User> list(PagingModel model) {
+        Long count = userDao.count(model);
+        if (StringUtils.isEmpty(model.getName())) {
+            model.setName("userName");
+        }
+        //need translate filed to column
+        if ("userName".equals(model.getName())) {
+            model.setName("user_name");
+        } else if ("taxiLicense".equals(model.getName())) {
+            model.setName("taxi_license");
+        } else if ("taxiLicense".equals(model.getName())) {
+            model.setName("taxi_license");
+        }
+        return JSonPagingResult.ofSuccess(count, userDao.select(model));
     }
 
 }
