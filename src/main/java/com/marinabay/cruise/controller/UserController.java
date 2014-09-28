@@ -1,5 +1,8 @@
 package com.marinabay.cruise.controller;
 
+import com.google.common.base.Function;
+import com.google.common.base.Splitter;
+import com.google.common.collect.Lists;
 import com.marinabay.cruise.constant.ROLE;
 import com.marinabay.cruise.constant.USERTYPE;
 import com.marinabay.cruise.model.*;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -66,12 +70,17 @@ public class UserController {
 
     @RequestMapping(value = {"/deleteUserGroup.json"}, method = RequestMethod.GET)
     @ResponseBody
-    public JSonResult<String> deleteUserGroup(HttpServletRequest request, Long id) {
-        try {
-            userGroupService.deleteByID(id);
-        } catch (Exception e) {
-            LOG.error("", e);
-            return JSonResult.ofError("Can not delete usergroup");
+    public JSonResult<String> deleteUserGroup(HttpServletRequest request, String ids) {
+        if (StringUtils.isNotEmpty(ids)) {
+            try {
+                Iterable<String> strings = Splitter.on(",").omitEmptyStrings().split(ids);
+                for (String id : strings) {
+                    userGroupService.deleteByID(Long.valueOf(id));
+                }
+            } catch (Exception e) {
+                LOG.error("", e);
+                return JSonResult.ofError("Can not delete usergroup");
+            }
         }
         return JSonResult.ofSuccess("Delete success");
     }
@@ -117,6 +126,44 @@ public class UserController {
     @ResponseBody
     public JSonPagingResult<User> listUser(HttpServletRequest request, PagingModel model) {
         return userService.list(model);
+    }
+
+    @RequestMapping(value = {"/deleteUser.json"}, method = RequestMethod.GET)
+    @ResponseBody
+    public JSonResult<String> deleteUser(HttpServletRequest request, String ids) {
+        if (StringUtils.isNotEmpty(ids)) {
+            try {
+                Iterable<String> strings = Splitter.on(",").omitEmptyStrings().split(ids);
+                for (String id : strings) {
+                    userService.deleteByID(Long.valueOf(id));
+                }
+            } catch (Exception e) {
+                LOG.error("", e);
+                return JSonResult.ofError("Can not delete users");
+            }
+        }
+        return JSonResult.ofSuccess("Delete success");
+    }
+
+    @RequestMapping(value = {"/assignUserGroup.json"}, method = RequestMethod.GET)
+    @ResponseBody
+    public JSonResult<String> assignUserGroup(HttpServletRequest request, String ids, Long groupId) {
+        if (StringUtils.isNotEmpty(ids) && groupId != null) {
+            try {
+                List<String> strings = Splitter.on(",").omitEmptyStrings().splitToList(ids);
+                List<Long> longs = Lists.transform(strings, new Function<String, Long>() {
+                    @Override
+                    public Long apply(String input) {
+                        return Long.valueOf(input);
+                    }
+                });
+                userService.assignGroup(longs, groupId);
+            } catch (Exception e) {
+                LOG.error("", e);
+                return JSonResult.ofError("Can not assign users");
+            }
+        }
+        return JSonResult.ofSuccess("Assign success");
     }
 
 

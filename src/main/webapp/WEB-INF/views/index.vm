@@ -31,6 +31,12 @@
                                 <li> <a href="userList.html"><i class="glyphicon glyphicon-th-list"></i> List Users</a>  </li>
                             </ul>
                         </accordion-group>
+                        <accordion-group heading="Cruise Management" is-open="true">
+                            <p>Here you can add, delete, edit Cruise</p>
+                            <ul class="list-unstyled collapse in">
+                                <li> <a href="listCruise.html"><i class="glyphicon glyphicon-th-list"></i> List Cruise</a>  </li>
+                            </ul>
+                        </accordion-group>
                         <accordion-group heading="Schedules Management" is-open="true">
                             <p>Here you can add, delete, edit schedules or import schedule</p>
                             <ul class="list-unstyled collapse in">
@@ -38,12 +44,7 @@
                                 <li> <a href="#"><i class="glyphicon glyphicon-th-list"></i> List Schedules</a>  </li>
                             </ul>
                         </accordion-group>
-                        <accordion-group heading="Cruise Management" is-open="true">
-                            <p>Here you can add, delete, edit Cruise</p>
-                            <ul class="list-unstyled collapse in">
-                                <li> <a href="#"><i class="glyphicon glyphicon-th-list"></i> List Cruise</a>  </li>
-                            </ul>
-                        </accordion-group>
+
                         <accordion-group heading="Other" is-open="true">
                             <ul class="list-unstyled collapse in">
                                 <li> <a href="#"><i class="glyphicon glyphicon-comment"></i> Send Push Notification</a>  </li>

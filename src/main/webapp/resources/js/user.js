@@ -19,12 +19,75 @@ cruiseApp.controller('UserGroupCtrl', function ($scope, $modal, $log) {
                 }
             }
         });
+    };
 
-       /* modalInstance.result.then(function (selectedItem) {
-            $scope.selected = selectedItem;
-        }, function () {
-           // $log.info('Modal dismissed at: ' + new Date());
-        });*/
+    $scope.assignGroup = function($event, id, name){
+        var selected = $('#userGroupTable').bootstrapTable('getSelections');
+        if(selected.length <= 0) {
+            bootbox.alert("Please select users");
+        } else {
+            bootbox.confirm("All selected users will be move to <strong>" + name + "</strong> group !", function(result) {
+                if(result) {
+                    var ids = [];
+                    $.each(selected, function(idx, row){
+                        if(row.role != 'ADMIN'){
+                            ids.push(row.id);
+                        }
+                    });
+                    $.ajax({
+                        type: "GET",
+                        url: 'assignUserGroup.json',
+                        data: {
+                            ids: ids.join(',') ,
+                            groupId: id
+                        },
+                        dataType: 'json'
+                    })
+                    .done(function(data) {
+                        $('#userGroupTable').bootstrapTable('refresh');
+                    });
+                }
+            });
+        }
+    }
+
+    $scope.filterItemSelect = function($event, id, name){
+        $scope.filterId = id;
+        $($event.target).parents('.btn-group').find('.dropdown-toggle').html(name+' <span class="caret"></span>');
+        //trigger refesh table
+        $('#userGroupTable').bootstrapTable('refresh');
+    }
+
+    $scope.delete = function () {
+        var selected = $('#userGroupTable').bootstrapTable('getSelections');
+        var ids = [];
+        if(selected && selected.length >0) {
+            $.each(selected, function(idx, row){
+                if(row.role != 'ADMIN'){
+                    ids.push(row.id);
+                }
+            })
+        }
+        if(ids.length > 0) {
+            bootbox.confirm("Are  you sure you want to remove it", function(result) {
+                if(result) {
+                    $.ajax({
+                        type: "GET",
+                        url: 'deleteUser.json',
+                        data: {
+                            ids: ids.join(',')
+                        },
+                        dataType: 'json'
+                    })
+                    .done(function(data) {
+                        $('#userGroupTable').bootstrapTable('refresh');
+                    })
+                    .fail(function() {
+
+                    });
+                }
+            });
+        }
     };
 
 });
@@ -44,6 +107,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, $http, userForm) {
         $scope.userForm.userGroupId = id;
         $($event.target).parents('.btn-group').find('.dropdown-toggle').html(name+' <span class="caret"></span>');
     }
+
     $scope.submit = function (form) {
         if(form.$valid) {
             $http({
@@ -101,9 +165,9 @@ window.operateEvents = {
             if(result) {
                 $.ajax({
                     type: "GET",
-                    url: 'deleteUserGroup.json',
+                    url: 'deleteUser.json',
                     data: {
-                        id: row.id
+                        ids: row.id
                     },
                     dataType: 'json'
                 })
@@ -119,12 +183,14 @@ window.operateEvents = {
 };
 
 function queryParams(params) {
+    var scope = angular.element('[ng-controller=UserGroupCtrl]').scope();
     return {
         limit: params.pageSize,
         offset: params.pageSize * (params.pageNumber - 1),
         search: params.searchText,
         name: params.sortName,
-        order: params.sortOrder
+        order: params.sortOrder,
+        filterId: scope.filterId
     };
 }
 
@@ -143,7 +209,7 @@ function rowStyle(row, index) {
 }
 
 $(function () {
-    $('#userGroupTable').bootstrapTable({
+    setTimeout(function(){$('#userGroupTable').bootstrapTable({
         url: 'listUser.json'
-    })
+    })}, 100);
 });

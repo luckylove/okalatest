@@ -12,6 +12,15 @@ public class PagingModel {
     private String search;
     private String name;
     private String order;
+    private Integer filterId;
+
+    public Integer getFilterId() {
+        return filterId;
+    }
+
+    public void setFilterId(Integer filterId) {
+        this.filterId = filterId;
+    }
 
     public int getLimit() {
         return limit;

@@ -34,5 +34,6 @@ public class RequestUtls {
     public static void clearLoggedUser(HttpServletRequest request) {
         HttpSession session = request.getSession();
         session.removeAttribute(USER_LOGIN);
+        request.removeAttribute("loggedUser");
     }
 }

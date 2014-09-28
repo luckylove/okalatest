@@ -27,7 +27,8 @@ public class UserGroupService extends GenericService<UserGroup>{
 
     public JSonPagingResult<UserGroup> list(PagingModel model) {
         Long count = userGroupDao.count(model);
-        return JSonPagingResult.ofSuccess(count, userGroupDao.select(model));
+        List<UserGroup> userGroups = userGroupDao.select(model);
+        return JSonPagingResult.ofSuccess(count, userGroups);
     }
 
     public List<UserGroup> listAlll(PagingModel model) {
@@ -37,5 +38,6 @@ public class UserGroupService extends GenericService<UserGroup>{
     public UserGroup findByName(String name) {
         return userGroupDao.findByName(name);
     }
+
 
 }

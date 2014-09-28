@@ -21,6 +21,8 @@ public class SecurityInterceptor extends HandlerInterceptorAdapter {
             response.sendRedirect(LOGIN_URL);
             return false;
         }
+        //add to request attribute
+        request.setAttribute("loggedUser", RequestUtls.getLoggedUser(request));
         return true;
     }
 }

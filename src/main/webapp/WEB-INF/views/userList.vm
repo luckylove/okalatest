@@ -1,23 +1,40 @@
 <script src="resources/js/user.js"></script>
 
-<div class="row mrt-10">
+<div class="row">
     <div class="col-xs-12">
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">User List</h3>
             </div>
             <div class="panel-body">
-                <div id="custem-toolbar">
+                <div id="custem-toolbar" class="aa">
                     <div class="row" ng-controller="UserGroupCtrl">
-                        <div class="col-xs-6">
+                        <div class="col-xs-12">
                             <button type="button" class="btn btn-primary" ng-click="open()">Add New</button>
-                        </div>
-                        <div class="col-xs-6">
-                            <button type="button" class="btn btn-danger pull-right">Delete</button>
+                            <div class="btn-group" dropdown is-open="status.isopen">
+                                <button type="button" class="btn btn-primary dropdown-toggle" ng-disabled="disabled">
+                                   Assign <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu" role="menu">
+                                    #foreach($item in $userGroup)
+                                        <li><a ng-click="assignGroup($event, $item.id, '$item.name')" href="#">$item.name</a></li>
+                                    #end
+                                </ul>
+                            </div>
+                            <button type="button" class="btn btn-danger" ng-click="delete()">Delete</button>
+                            <div class="btn-group" id="userGroupFilter">
+                                <a class="btn btn-default dropdown-toggle btn-select2" data-toggle="dropdown" href="#">Filter by group<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a ng-click="filterItemSelect($event, -1, 'All')" href="#">All</a></li>
+                                    #foreach($item in $userGroup)
+                                        <li><a ng-click="filterItemSelect($event, $item.id, '$item.name')" href="#">$item.name</a></li>
+                                    #end
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <table id="userGroupTable" data-height="530" data-side-pagination="server" data-pagination="true"   data-toolbar="#custem-toolbar"
+                <table id="userGroupTable" data-height="550" data-side-pagination="server" data-pagination="true"   data-toolbar="#custem-toolbar"
                        data-page-list="[5, 10, 20, 50, 100, 200]" data-search="true" data-query-params="queryParams" data-row-style="rowStyle">
                     <thead>
                     <tr>
@@ -26,7 +43,7 @@
                         <th data-field="email" data-align="center" data-sortable="true">Email</th>
                         <th data-field="mobile" data-align="center" data-sortable="true">Phone</th>
                         <th data-field="taxiLicense" data-sortable="true">License</th>
-                        <th data-field="address" data-sortable="true">Address</th>
+                        <th data-field="userGroupView" data-sortable="true">User Group</th>
                         <th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents">Action</th>
                     </tr>
                     </thead>

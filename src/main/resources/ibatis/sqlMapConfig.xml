@@ -7,7 +7,7 @@
         <setting name="cacheEnabled" value="false"/>
         <setting name="useGeneratedKeys" value="true"/>
         <setting name="defaultExecutorType" value="SIMPLE"/>
-       <!-- <setting name="jdbcTypeForNull" value="NULL" />-->
+        <setting name="jdbcTypeForNull" value="NULL" />
     </settings>
 
     <typeAliases>
@@ -15,6 +15,7 @@
         <typeAlias alias="userModel" type="com.marinabay.cruise.model.User"/>
         <typeAlias alias="userGroupModel" type="com.marinabay.cruise.model.UserGroup"/>
         <typeAlias alias="pagingModel" type="com.marinabay.cruise.model.PagingModel"/>
+        <typeAlias alias="cruiseModel" type="com.marinabay.cruise.model.Cruise"/>
 
     </typeAliases>
 </configuration>

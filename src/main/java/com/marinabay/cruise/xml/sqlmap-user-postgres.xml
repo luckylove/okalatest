@@ -29,25 +29,44 @@
 
     <select id="count" resultType="long" parameterType="pagingModel" >
         select count(id) as total
-        from users
+        from users  us
         where 1=1
-        <if test="search != null and search != ''" >
-            and (name like '%' || #{search} || '%' or description like '%' || #{search} || '%')
-        </if>
+        <choose>
+            <when test="filterId != null and filterId > 0">
+                and us.user_group_id = #{filterId}
+            </when>
+            <otherwise>
+                <if test="search != null and search != ''" >
+                    and (user_name like '%' || #{search} || '%' or address like '%' || #{search} || '%' or mobile like '%' || #{search} || '%'
+                    or taxi_license like '%' || #{search} || '%' or email like '%' || #{search} || '%')
+                </if>
+            </otherwise>
+        </choose>
     </select>
   <select id="select" resultMap="userResultMap" parameterType="map" >
     select
     <include refid="Base_Column_List_Aias" />  , usg.name as user_group_view
     from users us left outer join user_group usg on us.user_group_id = usg.id
       where 1=1
-      <if test="search != null and search != ''" >
-          and (user_name like '%' || #{search} || '%' or address like '%' || #{search} || '%' or mobile like '%' || #{search} || '%'
-          or taxi_license like '%' || #{search} || '%' or email like '%' || #{search} || '%')
-      </if>
+      <choose>
+          <when test="filterId != null and filterId > 0">
+            and us.user_group_id = #{filterId}
+          </when>
+          <otherwise>
+              <if test="search != null and search != ''" >
+                  and (user_name like '%' || #{search} || '%' or address like '%' || #{search} || '%' or mobile like '%' || #{search} || '%'
+                  or taxi_license like '%' || #{search} || '%' or email like '%' || #{search} || '%')
+              </if>
+          </otherwise>
+      </choose>
+
       <if test="name != null and name != ''" >
           order by ${name} ${order}
       </if>
-      limit ${limit} offset ${offset}
+      <if test="limit > 0" >
+          limit ${limit} offset ${offset}
+      </if>
+
   </select>
   
   <select id="selectByID" resultMap="userResultMap" parameterType="java.lang.Long" >
@@ -109,5 +128,14 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
+    <update id="assignGroup" parameterType="map" >
+    update users
+    set
+      user_group_id = #{userGroupId,jdbcType=BIGINT}
+    where id in
+    <foreach collection="ids" item="item" open="(" close=")" separator=",">
+      #{item}
+    </foreach>
+  </update>
   
 </mapper>

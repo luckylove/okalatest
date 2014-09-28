@@ -5,47 +5,29 @@
  * Time: 12:25 PM
  * To change this template use File | Settings | File Templates.
  */
-cruiseApp.controller('UserGroupCtrl', function ($scope, $modal, $log) {
-    $scope.open = function (size, userForm) {
-        var modalInstance = $modal.open({
-            templateUrl: 'addUserGroup.html',
-            controller: ModalInstanceCtrl,
-            size: size,
-            backdrop: 'static',
-            windowClass: 'modal-top',
-            resolve: {
-                userForm: function () {
-                    return userForm;
-                }
-            }
-        });
-    };
 
-});
+var listURL = "listCruise.json";
+var addModelURL = "addCruise.json";
+var deleteModelURL = "deleteCruise.json";
 
-var ModalInstanceCtrl = function ($scope, $modalInstance, $http, userForm) {
-
-    $scope.userForm = userForm || {};
-    $scope.userForm.isUpdate = $scope.userForm.id > 0;
-    $scope.cancel = function () {
-        $modalInstance.dismiss('cancel');
-    };
+cruiseApp.controller('GroupCtrl', function ($scope, $modal, $log, $http) {
+    $scope.userForm = {};
+    //$scope.userForm.isUpdate = $scope.userForm.id > 0;
 
     $scope.submit = function (form) {
         if(form.$valid) {
             $http({
                 method: "post",
-                url: "addUserGroup.json",
+                url: addModelURL,
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                 data: $.param($scope.userForm)
             }).success(function(data, status, headers, config) {
-                    console.log(data);
-                    if(!data.success){
-                        bootbox.alert(data.errorMsg);
-                    } else {
-                        $modalInstance.close();
-                        $('#userGroupTable').bootstrapTable('refresh');
-                    }
+                if(!data.success){
+                    bootbox.alert(data.errorMsg);
+                } else {
+                    $scope.userForm.name = "";
+                    $('#userGroupTable').bootstrapTable('refresh');
+                }
             }).
             error(function(data, status, headers, config) {
                 alert("have error")
@@ -54,6 +36,19 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, $http, userForm) {
             alert("Please input required field");
         }
     };
+
+    $scope.clear = function() {
+        $scope.userForm = {};
+        $scope.userForm.isUpdate = $scope.userForm.id > 0;
+    }
+
+    $scope.update = function (row) {
+        $scope.userForm = row;
+        delete  $scope.userForm['regDate'];
+        delete  $scope.userForm['modDate'];
+        $scope.userForm.isUpdate = $scope.userForm.id > 0;
+        $scope.focusInput=true;
+    }
 
     $scope.delete = function () {
         var selected = $('#userGroupTable').bootstrapTable('getSelections');
@@ -68,7 +63,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, $http, userForm) {
                 if(result) {
                     $.ajax({
                         type: "GET",
-                        url: 'deleteUserGroup.json',
+                        url: deleteModelURL,
                         data: {
                             ids: ids.join(',')
                         },
@@ -81,7 +76,9 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, $http, userForm) {
             });
         }
     };
-};
+});
+
+
 
 function operateFormatter(value, row, index) {
     return [
@@ -96,16 +93,17 @@ function operateFormatter(value, row, index) {
 
 window.operateEvents = {
     'click .edit': function (e, value, row, index) {
-        console.log(value, row, index);
-        var scope = angular.element('[ng-controller=UserGroupCtrl]').scope();
-        scope.open(null, row);
+        var $scope = angular.element('[ng-controller=GroupCtrl]').scope();
+        $scope.$apply(function() {
+            $scope.update(row);
+        });
     },
     'click .remove': function (e, value, row, index) {
         bootbox.confirm("Are  you sure you want to remove it", function(result) {
             if(result) {
                 $.ajax({
                     type: "GET",
-                    url: 'deleteUserGroup.json',
+                    url: deleteModelURL,
                     data: {
                         ids: row.id
                     },
@@ -113,9 +111,6 @@ window.operateEvents = {
                 })
                 .done(function(data) {
                     $('#userGroupTable').bootstrapTable('refresh');
-                })
-                .fail(function() {
-
                 });
             }
         });
@@ -134,6 +129,6 @@ function queryParams(params) {
 
 $(function () {
     setTimeout(function(){$('#userGroupTable').bootstrapTable({
-        url: 'listUserGroup.json'
+        url: listURL
     })}, 100);
 });

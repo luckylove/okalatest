@@ -1,5 +1,6 @@
 package com.marinabay.cruise.service;
 
+import com.google.common.collect.ImmutableMap;
 import com.marinabay.cruise.dao.UserDao;
 import com.marinabay.cruise.model.JSonPagingResult;
 import com.marinabay.cruise.model.PagingModel;
@@ -7,6 +8,8 @@ import com.marinabay.cruise.model.User;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * User: son.nguyen
@@ -44,4 +47,7 @@ public class UserService extends GenericService<User>{
         return JSonPagingResult.ofSuccess(count, userDao.select(model));
     }
 
+    public void assignGroup(List<Long> ids, Long groupId) {
+        getDao().assignGroup(ImmutableMap.of("ids", ids, "userGroupId", groupId));
+    }
 }
