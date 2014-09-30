@@ -16,6 +16,7 @@
         <typeAlias alias="userGroupModel" type="com.marinabay.cruise.model.UserGroup"/>
         <typeAlias alias="pagingModel" type="com.marinabay.cruise.model.PagingModel"/>
         <typeAlias alias="cruiseModel" type="com.marinabay.cruise.model.Cruise"/>
+        <typeAlias alias="scheduleModel" type="com.marinabay.cruise.model.Schedules"/>
 
     </typeAliases>
 </configuration>

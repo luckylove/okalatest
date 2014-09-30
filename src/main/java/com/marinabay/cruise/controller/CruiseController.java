@@ -1,5 +1,6 @@
 package com.marinabay.cruise.controller;
 
+import com.google.common.base.Splitter;
 import com.marinabay.cruise.model.Cruise;
 import com.marinabay.cruise.model.JSonPagingResult;
 import com.marinabay.cruise.model.JSonResult;
@@ -59,6 +60,23 @@ public class CruiseController {
                 return JSonResult.ofError("Name of cruise can not empty");
             }
         }
+    }
+
+    @RequestMapping(value = {"/deleteCruise.json"}, method = RequestMethod.GET)
+    @ResponseBody
+    public JSonResult<String> deleteCruise(HttpServletRequest request, String ids) {
+        if (StringUtils.isNotEmpty(ids)) {
+            try {
+                Iterable<String> strings = Splitter.on(",").omitEmptyStrings().split(ids);
+                for (String id : strings) {
+                    cruiseService.deleteByID(Long.valueOf(id));
+                }
+            } catch (Exception e) {
+                LOG.error("", e);
+                return JSonResult.ofError("Can not delete users");
+            }
+        }
+        return JSonResult.ofSuccess("Delete success");
     }
 
 

@@ -1,0 +1,114 @@
+<script src="resources/js/schedules.js"></script>
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">Schedules Management</h3>
+            </div>
+            <div class="panel-body">
+                <div id="custem-toolbar" class="aa">
+                    <div class="row" ng-controller="UserGroupCtrl">
+                        <div class="col-xs-12">
+                            <button type="button" class="btn btn-primary" ng-click="open()">Add New</button>
+
+                            <button type="button" class="btn btn-danger" ng-click="delete()">Delete</button>
+                            <div class="btn-group" id="userGroupFilter">
+                                <a class="btn btn-default dropdown-toggle btn-select2" data-toggle="dropdown" href="#">Filter by cruise<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a ng-click="filterItemSelect($event, -1, 'All')" href="#">All</a></li>
+                                    #foreach($item in $cruises)
+                                        <li><a ng-click="filterItemSelect($event, $item.id, '$item.name')" href="#">$item.name</a></li>
+                                    #end
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table id="userGroupTable" data-height="550" data-side-pagination="server" data-pagination="true"   data-toolbar="#custem-toolbar"
+                       data-page-list="[5, 10, 20, 50, 100, 200]" data-search="true" data-query-params="queryParams" data-row-style="rowStyle">
+                    <thead>
+                    <tr>
+                        <th data-field="state" data-checkbox="true"></th>
+                        <th data-field="cruiseName" data-align="center" data-sortable="true">Cruise name</th>
+                        <th data-field="arrivalTime" data-align="center" data-sortable="true">Arrival time</th>
+                        <th data-field="departureTime" data-align="center" data-sortable="true">Depature time</th>
+                        <th data-field="passengers" data-sortable="true">Passengers</th>
+                        <th data-field="callType" data-sortable="true">Call type</th>
+                        <th data-field="operate" data-formatter="operateFormatter" data-events="operateEvents">Action</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- we defind template here -->
+<script type="text/ng-template" id="addUserGroup.html">
+    <div class="modal-header">
+        <h3 class="modal-title">Add new schedule</h3>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" name="form" ng-submit="submit(form)" novalidate>
+            <div class="form-group">
+                <label for="inputName" class="control-label col-xs-3">Cruise</label>
+                <div class="col-xs-9">
+                    <div class="btn-group" id="cruiseDropdown">
+                        <a class="btn btn-default dropdown-toggle btn-select2" data-toggle="dropdown" href="#">{{userForm.cruiseName}} <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            #foreach($item in $cruises)
+                                <li><a ng-click="itemSelect($event, $item.id, '$item.name')" href="#">$item.name</a></li>
+                            #end
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputName" class="control-label col-xs-3">Arrival time</label>
+                <div class="col-xs-9">
+                    <div class='input-group date' id='datetimepicker9'>
+                        <input type="text"  ng-model="userForm.arrivalTime" class="form-control" id="inputName" required data-date-format="YYYY/MM/DD H:mm">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail" class="control-label col-xs-3">Departuare time</label>
+                <div class="col-xs-9">
+                    <div class='input-group date' id='datetimepicker10'>
+                        <input type="text" name="user111"  ng-model="userForm.departureTime" class="form-control" id="inputEmail" required data-date-format="YYYY/MM/DD H:mm">
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputMobile" class="control-label col-xs-3">Passengers</label>
+                <div class="col-xs-9">
+                    <input type="number" name="user111"  ng-model="userForm.passengers"  required min="0" class="form-control" id="inputMobile" >
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPass"  class="control-label col-xs-3">Call type</label>
+                <div class="col-xs-9">
+                    <div class="btn-group" id="userGroupDropdown">
+                        <a class="btn btn-default dropdown-toggle btn-select2" data-toggle="dropdown" href="#">{{userForm.callType}} <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a ng-click="callTypeSelect($event, 'Transit', 'Transit')" href="#">Transit</a></li>
+                            <li><a ng-click="callTypeSelect($event, 'Turnaround', 'Turnaround')" href="#">Turnaround</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-offset-8 col-xs-4">
+                    <button class="btn btn-primary ng-hide" ng-hide="!userForm.isUpdate" type="submit">Update</button>
+                    <button class="btn btn-primary ng-hide" ng-hide="userForm.isUpdate" type="submit">Add</button>
+                    <button type="button" class="btn btn-warning" ng-click="cancel()">Cancel</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</script>
