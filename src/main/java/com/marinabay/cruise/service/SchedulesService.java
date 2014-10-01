@@ -25,17 +25,17 @@ public class SchedulesService extends GenericService<Schedules>{
 
     public JSonPagingResult<Schedules> list(PagingModel model) {
         Long count = schedulesDao.count(model);
-       /* if (StringUtils.isEmpty(model.getName())) {
-            model.setName("userName");
-        }
+
         //need translate filed to column
-        if ("userName".equals(model.getName())) {
-            model.setName("user_name");
-        } else if ("taxiLicense".equals(model.getName())) {
-            model.setName("taxi_license");
-        } else if ("taxiLicense".equals(model.getName())) {
-            model.setName("taxi_license");
-        }*/
+        if ("arrivalTimeStr".equals(model.getName())) {
+            model.setName("arrival_time");
+        } else if ("departureTimeStr".equals(model.getName())) {
+            model.setName("departure_time");
+        } else if ("passengers".equals(model.getName())) {
+            model.setName("passengers");
+        } else if ("callType".equals(model.getName())) {
+            model.setName("call_type");
+        }
         return JSonPagingResult.ofSuccess(count, schedulesDao.select(model));
     }
 

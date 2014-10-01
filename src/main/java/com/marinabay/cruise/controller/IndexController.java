@@ -1,5 +1,7 @@
 package com.marinabay.cruise.controller;
 
+import com.marinabay.cruise.model.JSonResult;
+import com.marinabay.cruise.model.PagingModel;
 import com.marinabay.cruise.model.User;
 import com.marinabay.cruise.service.UserService;
 import com.marinabay.cruise.utils.RequestUtls;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -28,6 +31,20 @@ public class IndexController {
 	public String home(HttpServletRequest request, ModelMap model) {
         model.addAttribute("loggedUser", RequestUtls.getLoggedUser(request));
         return "/index";
+    }
+
+    @RequestMapping(value = {"/profile.html"}, method = RequestMethod.GET)
+    public String profile(HttpServletRequest request, ModelMap model) {
+        model.addAttribute("loggedUser", RequestUtls.getLoggedUser(request));
+        model.addAttribute("viewType", "profile");
+        return "/index";
+    }
+
+    @RequestMapping(value = {"/getLogUser.json"}, method = RequestMethod.GET)
+    @ResponseBody
+    public JSonResult<User> getLogUser(HttpServletRequest request, PagingModel model) {
+        User loggedUser = RequestUtls.getLoggedUser(request);
+        return JSonResult.ofSuccess(userService.selectByID(loggedUser.getId()));
     }
 
     @RequestMapping(value = {"/login.html"}, method = RequestMethod.GET)

@@ -75,7 +75,10 @@ public class UserController {
             try {
                 Iterable<String> strings = Splitter.on(",").omitEmptyStrings().split(ids);
                 for (String id : strings) {
-                    userGroupService.deleteByID(Long.valueOf(id));
+                    //update user
+                    Long aLong = Long.valueOf(id);
+                    userService.resetUserGroup(aLong);
+                    userGroupService.deleteByID(aLong);
                 }
             } catch (Exception e) {
                 LOG.error("", e);

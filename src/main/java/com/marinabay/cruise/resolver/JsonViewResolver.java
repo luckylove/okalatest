@@ -1,5 +1,7 @@
 package com.marinabay.cruise.resolver;
 
+import com.fasterxml.jackson.databind.SerializationFeature;
+import org.codehaus.jackson.map.util.ISO8601DateFormat;
 import org.springframework.core.Ordered;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
@@ -23,6 +25,8 @@ public class JsonViewResolver implements ViewResolver , Ordered {
     public View resolveViewName(String viewName, Locale locale)
             throws Exception {
         MappingJackson2JsonView view = new MappingJackson2JsonView();
+        view.getObjectMapper().configure(SerializationFeature.WRITE_DATE_KEYS_AS_TIMESTAMPS, false);
+        view.getObjectMapper().setDateFormat(new ISO8601DateFormat());
         view.setPrettyPrint(true);
         return view;
     }

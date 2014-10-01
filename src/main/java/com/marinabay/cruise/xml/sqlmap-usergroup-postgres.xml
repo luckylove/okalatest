@@ -64,10 +64,11 @@
   </delete>
 
   <insert id="insert" parameterType="userGroupModel" >
-    insert into user_group (name, description)
+    insert into user_group (name, description, reg_date)
     values (
     	#{name,jdbcType=VARCHAR},
-    	#{description,jdbcType=VARCHAR}
+    	#{description,jdbcType=VARCHAR},
+    	now()
       )
       
     <selectKey resultType="java.lang.Long" keyProperty="id" >
@@ -81,7 +82,8 @@
   <update id="update" parameterType="userGroupModel" >
     update user_group
     set name = #{name,jdbcType=VARCHAR},
-      description = #{description,jdbcType=VARCHAR}
+      description = #{description,jdbcType=VARCHAR},
+      mod_date = now()
     where id = #{id,jdbcType=BIGINT}
   </update>
   

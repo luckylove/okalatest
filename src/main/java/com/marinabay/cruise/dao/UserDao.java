@@ -10,5 +10,6 @@ public interface UserDao extends GenericDao<User> {
 	public User findUserByEmail(String email);
 
     public void assignGroup(Map<String, Object> map) ;
+    public void resetUserGroup(Long userGroupId) ;
 
 }

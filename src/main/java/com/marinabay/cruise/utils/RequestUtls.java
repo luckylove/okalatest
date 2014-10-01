@@ -4,6 +4,9 @@ import com.marinabay.cruise.model.User;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * User: son.nguyen
@@ -35,5 +38,10 @@ public class RequestUtls {
         HttpSession session = request.getSession();
         session.removeAttribute(USER_LOGIN);
         request.removeAttribute("loggedUser");
+    }
+
+    public static String date2Str(Date date) {
+        DateFormat sf = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+        return sf.format(date);
     }
 }

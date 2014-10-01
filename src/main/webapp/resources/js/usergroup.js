@@ -96,7 +96,8 @@ function operateFormatter(value, row, index) {
 
 window.operateEvents = {
     'click .edit': function (e, value, row, index) {
-        console.log(value, row, index);
+        delete row.regDate;
+        delete row.modDate;
         var scope = angular.element('[ng-controller=UserGroupCtrl]').scope();
         scope.open(null, row);
     },

@@ -128,7 +128,7 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
 
-    <update id="assignGroup" parameterType="map" >
+ <update id="assignGroup" parameterType="map" >
     update users
     set
       user_group_id = #{userGroupId,jdbcType=BIGINT}
@@ -137,5 +137,12 @@
       #{item}
     </foreach>
   </update>
+
+    <update id="resetUserGroup" parameterType="long" >
+        update users
+        set
+        user_group_id = NULL
+        where user_group_id =#{value}
+    </update>
   
 </mapper>

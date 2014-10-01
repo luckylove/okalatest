@@ -50,4 +50,8 @@ public class UserService extends GenericService<User>{
     public void assignGroup(List<Long> ids, Long groupId) {
         getDao().assignGroup(ImmutableMap.of("ids", ids, "userGroupId", groupId));
     }
+
+    public void resetUserGroup(Long userGroupId) {
+        getDao().resetUserGroup(userGroupId);
+    }
 }

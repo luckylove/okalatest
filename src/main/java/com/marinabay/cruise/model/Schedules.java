@@ -1,5 +1,7 @@
 package com.marinabay.cruise.model;
 
+import com.marinabay.cruise.utils.RequestUtls;
+
 import java.util.Date;
 
 /**
@@ -17,6 +19,31 @@ public class Schedules extends GenericModel{
 
     //custom field
     private String cruiseName;
+
+    private String arrivalTimeStr;
+    private String departureTimeStr;
+
+    public String getArrivalTimeStr() {
+        if (arrivalTime != null) {
+            arrivalTimeStr = RequestUtls.date2Str(arrivalTime);
+        }
+        return arrivalTimeStr;
+    }
+
+    public void setArrivalTimeStr(String arrivalTimeStr) {
+        this.arrivalTimeStr = arrivalTimeStr;
+    }
+
+    public String getDepartureTimeStr() {
+        if (departureTime != null) {
+            departureTimeStr = RequestUtls.date2Str(departureTime);
+        }
+        return departureTimeStr;
+    }
+
+    public void setDepartureTimeStr(String departureTimeStr) {
+        this.departureTimeStr = departureTimeStr;
+    }
 
     public Schedules() {
     }
