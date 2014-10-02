@@ -6,6 +6,7 @@ import com.google.common.collect.Lists;
 import com.marinabay.cruise.constant.ROLE;
 import com.marinabay.cruise.constant.USERTYPE;
 import com.marinabay.cruise.model.*;
+import com.marinabay.cruise.service.ActiveUserService;
 import com.marinabay.cruise.service.UserGroupService;
 import com.marinabay.cruise.service.UserService;
 import org.apache.commons.lang.StringUtils;
@@ -32,6 +33,9 @@ public class UserController {
 
     @Autowired
     private UserGroupService userGroupService;
+
+    @Autowired
+    private ActiveUserService activeUserService;
 
 
 	@RequestMapping(value = {"/userGroup.html"}, method = RequestMethod.GET)
@@ -169,6 +173,26 @@ public class UserController {
         return JSonResult.ofSuccess("Assign success");
     }
 
+
+
+    @RequestMapping(value = {"/listUserByLicense.json"}, method = RequestMethod.GET)
+    @ResponseBody
+    public List<User> listUserByLicense(HttpServletRequest request, String license) {
+        return userService.selectByLicense(license);
+    }
+
+    @RequestMapping(value = {"/addActiveUser.json"}, method = RequestMethod.POST)
+    @ResponseBody
+    public JSonResult<String> addActiveUser(HttpServletRequest request, Long userId) {
+        activeUserService.insertOrUpdate(userId);
+        return JSonResult.ofSuccess("");
+    }
+
+    @RequestMapping(value = {"/listActiveUser.json"}, method = RequestMethod.GET)
+    @ResponseBody
+    public JSonPagingResult<ActiveUser> listActiveUser(HttpServletRequest request, PagingModel model) {
+        return activeUserService.list(model);
+    }
 
 
 

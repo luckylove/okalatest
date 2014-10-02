@@ -29,7 +29,8 @@ public class IndexController {
 
 	@RequestMapping(value = {"/", "/index.html"}, method = RequestMethod.GET)
 	public String home(HttpServletRequest request, ModelMap model) {
-        model.addAttribute("loggedUser", RequestUtls.getLoggedUser(request));
+        User loggedUser = RequestUtls.getLoggedUser(request);
+        model.addAttribute("loggedUser", loggedUser);
         return "/index";
     }
 
@@ -75,6 +76,15 @@ public class IndexController {
     @RequestMapping(value = {"/error.html"}, method = RequestMethod.GET)
     public String error(ModelMap model, Integer page) {
         return "/error";
+    }
+
+
+
+
+    @RequestMapping(value = {"/activeUser.html"}, method = RequestMethod.GET)
+    public String activeUser(HttpServletRequest request, ModelMap model) {
+        model.addAttribute("viewType", "activeUser");
+        return "/index";
     }
 
 

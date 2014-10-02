@@ -44,4 +44,8 @@ public class RequestUtls {
         DateFormat sf = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
         return sf.format(date);
     }
+
+    public static String date2Str(Date date, DateFormat sf) {
+        return sf.format(date);
+    }
 }

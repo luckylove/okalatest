@@ -54,4 +54,8 @@ public class UserService extends GenericService<User>{
     public void resetUserGroup(Long userGroupId) {
         getDao().resetUserGroup(userGroupId);
     }
+
+    public List<User> selectByLicense(String license) {
+        return getDao().selectByLicense(license);
+    }
 }

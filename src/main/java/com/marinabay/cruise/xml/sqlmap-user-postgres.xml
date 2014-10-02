@@ -68,6 +68,14 @@
       </if>
 
   </select>
+
+    <select id="selectByLicense" resultMap="userResultMap" parameterType="java.lang.String" >
+        select
+        <include refid="Base_Column_List_Aias" />
+        from users us
+        where 1=1   and lower(taxi_license) like '%' || lower(#{value}) || '%'
+        limit 10 offset 0
+    </select>
   
   <select id="selectByID" resultMap="userResultMap" parameterType="java.lang.Long" >
     select 
