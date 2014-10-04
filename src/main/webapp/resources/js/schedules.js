@@ -6,6 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 var listURL = "listSchedules.json";
+var listDashboardURL = "listDashboard.json";
 var addModelURL = "addSchedules.json";
 var deleteModelURL = "deleteSchedules.json";
 
@@ -25,7 +26,12 @@ cruiseApp.controller('UserGroupCtrl', function ($scope, $modal, $log) {
         });
     };
 
-
+    $scope.clear = function($event, id, name){
+        $scope.departureTime = null;
+        $event.stopPropagation();
+        $event.preventDefault();
+        $('#userGroupTable').bootstrapTable('refresh');
+    }
     $scope.filterItemSelect = function($event, id, name){
         $scope.filterId = id;
         $($event.target).parents('.btn-group').find('.dropdown-toggle').html(name+' <span class="caret"></span>');
@@ -65,6 +71,36 @@ cruiseApp.controller('UserGroupCtrl', function ($scope, $modal, $log) {
         }
     };
 
+    $scope.filterByDate = function(chooseDate){
+        var dd = chooseDate.format("YYYY/MM/DD");
+        if( $scope.departureTime !== dd) {
+            $scope.departureTime = dd;
+            $('#userGroupTable').bootstrapTable('refresh');
+        }
+    }
+    $scope.$watch(
+        function () { return document.getElementById('datetimeSchedule').innerHTML },
+        function(newval, oldval){
+            $('#datetimeSchedule').datetimepicker({
+                showToday: true
+            });
+            $("#datetimeSchedule").on("dp.change",function (e) {
+                $scope.filterByDate(e.date);
+            });
+        }, true);
+
+    $scope.todayCnt = 0;
+    $scope.tomorrowCnt = 0;
+    $scope.nextCnt = 0;
+    $scope.increaseToday=function(){
+        $scope.todayCnt += 1;
+    }
+    $scope.increaseTomorrow=function(){
+        $scope.tomorrowCnt += 1;
+    }
+    $scope.increaseNext=function(){
+        $scope.nextCnt += 1;
+    }
 });
 
 var ModalInstanceCtrl = function ($scope, $modalInstance, $http, userForm) {
@@ -107,6 +143,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, $http, userForm) {
                     bootbox.alert(data.errorMsg);
                 } else {
                     $modalInstance.close();
+                    $('#dashboardTable').bootstrapTable('refresh');
                     $('#userGroupTable').bootstrapTable('refresh');
                 }
             }).
@@ -185,7 +222,8 @@ function queryParams(params) {
         search: params.searchText,
         name: params.sortName,
         order: params.sortOrder,
-        filterId: scope.filterId
+        filterId: scope.filterId,
+        departureTime: scope.departureTime
     };
 }
 
@@ -199,9 +237,42 @@ function rowStyle(row, index) {
     return {};
 }
 
+function rowBoardStyle(row, index) {
+    var spDate = moment(row.departureTimeStr, "YYYY/MM/DD H:mm:ss");
+    var $scope = angular.element('[ng-controller=UserGroupCtrl]').scope();
+    if(moment().diff(spDate, 'days') == 0){
+        $scope.$apply(function() {
+            $scope.increaseToday();
+        });
+        return {
+            classes: 'danger'
+        };
+    } else if(spDate.diff(moment(), 'days') == 1){
+        $scope.$apply(function() {
+            $scope.increaseTomorrow();
+        });
+        return {
+            classes: 'success'
+        };
+    } else {
+        $scope.$apply(function() {
+            $scope.increaseNext();
+        });
+        return {
+            classes: 'info'
+        };
+    }
+    return {};
+}
+
 $(function () {
-    setTimeout(function(){$('#userGroupTable').bootstrapTable({
-        url: listURL
-    })}, 100);
+    setTimeout(function(){
+        $('#dashboardTable').bootstrapTable({
+            url: listDashboardURL
+        });
+        $('#userGroupTable').bootstrapTable({
+            url: listURL
+        })
+    }, 100);
 
 });

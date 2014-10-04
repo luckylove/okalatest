@@ -31,8 +31,8 @@
                 and us.cruise_id = #{filterId}
             </when>
             <otherwise>
-                <if test="search != null and search != ''" >
-
+                <if test="departureTime != null and departureTime != ''" >
+                    <![CDATA[ and to_date(#{departureTime}, 'YYYY/MM/DD') = departure_time::date ]]>
                 </if>
             </otherwise>
         </choose>
@@ -47,8 +47,8 @@
             and us.cruise_id = #{filterId}
           </when>
           <otherwise>
-              <if test="search != null and search != ''" >
-
+              <if test="departureTime != null and departureTime != ''" >
+                  <![CDATA[ and to_date(#{departureTime}, 'YYYY/MM/DD') = departure_time::date ]]>
               </if>
           </otherwise>
       </choose>
@@ -61,6 +61,24 @@
       </if>
 
   </select>
+
+   <select id="countDashboard" resultType="long" parameterType="map" >
+        select count(id) as total
+        from schedules  us
+        where 1=1
+       <![CDATA[ and #{startTime} <=  departure_time and departure_time <= #{endTime}]]>
+    </select>
+    <select id="selectDashboard" resultMap="resultMap" parameterType="map" >
+        select
+        <include refid="Base_Column_List_Aias" />  , cr.name as cruise_name
+        from schedules us left outer join cruise cr on us.cruise_id =cr.id
+        where 1=1
+        <![CDATA[ and #{startTime} <=  departure_time and departure_time <= #{endTime}]]>
+        order by departure_time
+        <if test="limit > 0" >
+            limit ${limit} offset ${offset}
+        </if>
+    </select>
   
   <select id="selectByID" resultMap="resultMap" parameterType="java.lang.Long" >
     select 

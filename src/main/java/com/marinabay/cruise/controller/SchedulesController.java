@@ -1,10 +1,7 @@
 package com.marinabay.cruise.controller;
 
 import com.google.common.base.Splitter;
-import com.marinabay.cruise.model.JSonPagingResult;
-import com.marinabay.cruise.model.JSonResult;
-import com.marinabay.cruise.model.PagingModel;
-import com.marinabay.cruise.model.Schedules;
+import com.marinabay.cruise.model.*;
 import com.marinabay.cruise.service.CruiseService;
 import com.marinabay.cruise.service.SchedulesService;
 import org.apache.commons.lang.StringUtils;
@@ -39,9 +36,15 @@ public class SchedulesController {
         return "/index";
     }
 
+    @RequestMapping(value = {"/listDashboard.json"}, method = RequestMethod.GET)
+    @ResponseBody
+    public JSonPagingResult<Schedules> listDashboard(HttpServletRequest request, PagingModel model) {
+        return schedulesService.listDashboard(model);
+    }
+
     @RequestMapping(value = {"/listSchedules.json"}, method = RequestMethod.GET)
     @ResponseBody
-    public JSonPagingResult<Schedules> listSchedules(HttpServletRequest request, PagingModel model) {
+    public JSonPagingResult<Schedules> listSchedules(HttpServletRequest request, SchelduePagingModel model) {
         return schedulesService.list(model);
     }
 
