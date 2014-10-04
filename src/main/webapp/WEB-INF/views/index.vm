@@ -6,9 +6,13 @@
     <link href="resources/css/bootstrap-theme.css" rel="stylesheet">
     <link href="resources/css/bootstrap-table.min.css" rel="stylesheet">
     <link href="resources/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link href="resources/css/jquery-ui-base-1.8.20.css" rel="stylesheet">
+    <link href="resources/css/tagit-stylish-yellow.css" rel="stylesheet">
+    <link href="resources/css/tagit.css" rel="stylesheet">
     <link href="resources/css/index.css" rel="stylesheet">
 
     <script src="resources/js/jquery.min.js"></script>
+    <script src="resources/js/jquery-ui.1.8.20.min.js"></script>
     <script src="resources/js/angular-1.2.10.js"></script>
     <script src="resources/js/bootstrap.min.js"></script>
     <script src="resources/js/ui-bootstrap-tpls-0.11.0.js"></script>
@@ -16,6 +20,7 @@
     <script src="resources/js/bootbox.min.js"></script>
     <script src="resources/js/moment.min.js"></script>
     <script src="resources/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="resources/js/tagit-themeroller.js"></script>
     <script src="resources/js/index.js"></script>
 </head>
 <body>
@@ -66,8 +71,8 @@
                         #if("$!loggedUser.role" == "ADMIN")
                         <accordion-group heading="Other" is-open="true">
                             <ul class="list-unstyled collapse in">
-                                <li> <a href="#"><i class="glyphicon glyphicon-comment"></i> Send Push Notification</a>  </li>
-                                <li> <a href="#"><i class="glyphicon glyphicon-th-list"></i> List Notification</a>  </li>
+                                <li> <a href="notification.html?addnew=true"><i class="glyphicon glyphicon-comment"></i> Send Push Notification</a>  </li>
+                                <li> <a href="notification.html"><i class="glyphicon glyphicon-th-list"></i> List Notification</a>  </li>
                                 <li> <a href="#"><i class="glyphicon glyphicon-th-list"></i> List Taxi</a>  </li>
                             </ul>
                         </accordion-group>

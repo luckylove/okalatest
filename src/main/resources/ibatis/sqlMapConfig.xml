@@ -18,6 +18,7 @@
         <typeAlias alias="cruiseModel" type="com.marinabay.cruise.model.Cruise"/>
         <typeAlias alias="scheduleModel" type="com.marinabay.cruise.model.Schedules"/>
         <typeAlias alias="activeUserModel" type="com.marinabay.cruise.model.ActiveUser"/>
+        <typeAlias alias="notificationModel" type="com.marinabay.cruise.model.Notification"/>
 
     </typeAliases>
 </configuration>
